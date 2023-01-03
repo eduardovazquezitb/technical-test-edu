@@ -4,11 +4,11 @@ import { Button } from './styles'
 import EmployeeDisplayer from '../EmployeeDisplayer'
 
 const DynamicAllEmployeesDisplayer = () => {
-  const [numberOfEmployeesState, setNumberOfEmployeesState] = useState(1)
+  const [numberOfEmployeesState, setNumberOfEmployeesState] = useState(0)
 
   const increaseNumberOfEmployees = () => {
     if (numberOfEmployeesState === data.length) {
-      setNumberOfEmployeesState(1)
+      setNumberOfEmployeesState(0)
     } else {
       setNumberOfEmployeesState(numberOfEmployeesState + 1)
     }

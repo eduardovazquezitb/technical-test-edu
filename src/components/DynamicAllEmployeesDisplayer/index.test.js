@@ -1,16 +1,20 @@
 import React from 'react'
 import { render, screen, waitForElement, fireEvent } from '@testing-library/react'
 // import axiosMock from 'axios'
-import { DynamicAllEmployeesDisplayer } from './index.jsx'
-import jest from 'jest'
+import DynamicAllEmployeesDisplayer from './index.jsx'
 
-jest.mock('axios')
+it('should display a button', () => {
+  render(<DynamicAllEmployeesDisplayer />)
+  const button = screen.queryAllByTestId('add-employee-button')
+  expect(button.length).toBe(1)
+})
 
-it('should display a loading text', () => {
+it('should not display any employee', () => {
   render(<DynamicAllEmployeesDisplayer />)
   const employees = screen.queryAllByTestId('employee-displayer')
   expect(employees.length).toBe(0)
 })
+
 /*
 it('should load and display the data', async () => {
   const url = '/greeting'

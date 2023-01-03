@@ -17,7 +17,7 @@ const DynamicAllEmployeesDisplayer = () => {
 
   return (
     <>
-      <Button onClick={() => increaseNumberOfEmployees()}>
+      <Button onClick={() => increaseNumberOfEmployees()} data-testid='add-employee-button'>
         Add Employee
       </Button>
       {employees.filter((_, id) => id < numberOfEmployeesState)

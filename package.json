@@ -16,6 +16,12 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.0"
   },
+  "jest": {
+    "transform": {
+        "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": ["<rootDir>/node_modules/(?!axios)/"]
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -41,6 +47,8 @@
     ]
   },
   "devDependencies": {
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "standard": "^17.0.0"
   }
 }

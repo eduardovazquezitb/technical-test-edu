@@ -1,11 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import DisplayAllEmployees from './components/DisplayAllEmployees'
+import DynamicAllEmployeesDisplayer from './components/DynamicAllEmployeesDisplayer'
 import './index.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
-    <DisplayAllEmployees />
+    <DynamicAllEmployeesDisplayer />
   </React.StrictMode>
 )

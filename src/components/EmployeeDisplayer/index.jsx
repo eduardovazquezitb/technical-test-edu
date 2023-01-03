@@ -7,7 +7,7 @@ const EmployeeDisplayer = ({ employee = {} }) => {
   const { picture = {} } = employee
   const { medium = '' } = picture
   return (
-    <Frame>
+    <Frame data-testid='employee-displayer'>
       <Img alt={first + ' ' + last} src={medium} />
       <InfoList>
         <p><b>{first + ' ' + last}</b></p>

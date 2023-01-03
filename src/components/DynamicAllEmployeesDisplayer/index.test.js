@@ -15,6 +15,17 @@ it('should not display any employee', () => {
   expect(employees.length).toBe(0)
 })
 
+it('should display one employee after clicking the button', async () => {
+  act(async () => {
+    render(<DynamicAllEmployeesDisplayer />)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+  })
+  const button = screen.queryAllByTestId('add-employee-button')
+  fireEvent.click(button[0])
+  const employees = screen.queryAllByTestId('employee-displayer')
+  expect(employees.length).toBe(1)
+})
+
 /*
 it('should load and display the data', async () => {
   const url = '/greeting'

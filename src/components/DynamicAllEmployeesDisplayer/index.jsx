@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import data from '../../resources/dataSamples/employees'
 import { Button } from './styles'
+import { useEmployees } from '../../api/Api'
 import EmployeeDisplayer from '../EmployeeDisplayer'
 
 const DynamicAllEmployeesDisplayer = () => {
   const [numberOfEmployeesState, setNumberOfEmployeesState] = useState(0)
+  const [employees] = useEmployees()
 
   const increaseNumberOfEmployees = () => {
-    if (numberOfEmployeesState === data.length) {
+    if (numberOfEmployeesState === employees.length) {
       setNumberOfEmployeesState(0)
     } else {
       setNumberOfEmployeesState(numberOfEmployeesState + 1)
@@ -19,7 +20,7 @@ const DynamicAllEmployeesDisplayer = () => {
       <Button onClick={() => increaseNumberOfEmployees()}>
         Add Employee
       </Button>
-      {data.filter((_, id) => id < numberOfEmployeesState)
+      {employees.filter((_, id) => id < numberOfEmployeesState)
         .map((employee, id) =>
           <EmployeeDisplayer key={id} employee={employee} />
         )}

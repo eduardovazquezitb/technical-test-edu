@@ -16,14 +16,34 @@ it('should not display any employee', () => {
 })
 
 it('should display one employee after clicking the button', async () => {
-  act(async () => {
-    render(<DynamicAllEmployeesDisplayer />)
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-  })
+  render(<DynamicAllEmployeesDisplayer />)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
   const button = screen.queryAllByTestId('add-employee-button')
   fireEvent.click(button[0])
   const employees = screen.queryAllByTestId('employee-displayer')
   expect(employees.length).toBe(1)
+})
+
+it('should display three employees after clicking the button thrice', async () => {
+  render(<DynamicAllEmployeesDisplayer />)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  const button = screen.queryAllByTestId('add-employee-button')
+  fireEvent.click(button[0])
+  fireEvent.click(button[0])
+  fireEvent.click(button[0])
+  const employees = screen.queryAllByTestId('employee-displayer')
+  expect(employees.length).toBe(3)
+})
+
+it('should display no employees after clicking the button six times', async () => {
+  render(<DynamicAllEmployeesDisplayer />)
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  const button = screen.queryAllByTestId('add-employee-button')
+  for (let i = 0; i < 6; i++) {
+    fireEvent.click(button[0])
+  }
+  const employees = screen.queryAllByTestId('employee-displayer')
+  expect(employees.length).toBe(0)
 })
 
 /*

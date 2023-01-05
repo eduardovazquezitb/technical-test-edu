@@ -6,6 +6,7 @@ export const useEmployees = () => {
 
   const fetchData = async () => {
     const response = await axios.get('https://randomuser.me/api/?results=5')
+    console.log(response)
     setResponseArray(response.data.results)
   }
 

@@ -16,7 +16,7 @@ const DynamicAllEmployeesDisplayer = () => {
   }
 
   return (
-    <>
+    <div data-testid={employees.length === 0 ? 'employee-displayer-not-loaded' : 'employee-displayer-loaded'}>
       <Button onClick={() => increaseNumberOfEmployees()} data-testid='add-employee-button'>
         Add Employee
       </Button>
@@ -24,7 +24,7 @@ const DynamicAllEmployeesDisplayer = () => {
         .map((employee, id) =>
           <EmployeeDisplayer key={id} employee={employee} />
         )}
-    </>
+    </div>
   )
 }
 

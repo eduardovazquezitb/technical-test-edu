@@ -1,7 +1,11 @@
 import React from 'react'
-import { render, screen, waitForElement, fireEvent } from '@testing-library/react'
-// import axiosMock from 'axios'
+import { render, screen, fireEvent, waitFor, findByTestId } from '@testing-library/react'
+import { act } from 'react-dom/test-utils'
+import axiosMock from 'axios'
+import data from '../../resources/dataSamples/employees'
 import DynamicAllEmployeesDisplayer from './index.jsx'
+
+jest.mock('axios')
 
 it('should display a button', () => {
   render(<DynamicAllEmployeesDisplayer />)
@@ -16,51 +20,42 @@ it('should not display any employee', () => {
 })
 
 it('should display one employee after clicking the button', async () => {
-  render(<DynamicAllEmployeesDisplayer />)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  const button = screen.queryAllByTestId('add-employee-button')
-  fireEvent.click(button[0])
-  const employees = screen.queryAllByTestId('employee-displayer')
-  expect(employees.length).toBe(1)
+  axiosMock.get.mockResolvedValueOnce({
+    data: { results: data }
+  })
+  await act(async () => {
+    render(<DynamicAllEmployeesDisplayer />)
+    await new Promise((resolve) => setTimeout(resolve, 600))
+  })
+  const button = screen.getByTestId('add-employee-button')
+  fireEvent.click(button)
+  expect(screen.getByTestId('employee-displayer')).toBeInTheDocument()
 })
 
 it('should display three employees after clicking the button thrice', async () => {
-  render(<DynamicAllEmployeesDisplayer />)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  const button = screen.queryAllByTestId('add-employee-button')
-  fireEvent.click(button[0])
-  fireEvent.click(button[0])
-  fireEvent.click(button[0])
-  const employees = screen.queryAllByTestId('employee-displayer')
-  expect(employees.length).toBe(3)
-})
-
-it('should display no employees after clicking the button six times', async () => {
-  render(<DynamicAllEmployeesDisplayer />)
-  await new Promise((resolve) => setTimeout(resolve, 2000))
-  const button = screen.queryAllByTestId('add-employee-button')
-  for (let i = 0; i < 6; i++) {
-    fireEvent.click(button[0])
-  }
-  const employees = screen.queryAllByTestId('employee-displayer')
-  expect(employees.length).toBe(0)
-})
-
-/*
-it('should load and display the data', async () => {
-  const url = '/greeting'
-  const { getByTestId } = render(<DynamicAllEmployeesDisplayer url={url} />)
-
   axiosMock.get.mockResolvedValueOnce({
-    data: { greeting: 'hello there' }
+    data: { results: data }
   })
-
-  fireEvent.click(getByTestId('fetch-data'))
-
-  const greetingData = await waitForElement(() => getByTestId('show-data'))
-
-  expect(axiosMock.get).toHaveBeenCalledTimes(1)
-  expect(axiosMock.get).toHaveBeenCalledWith(url)
-  expect(greetingData).toHaveTextContent('hello there')
+  await act(async () => {
+    render(<DynamicAllEmployeesDisplayer />)
+    await new Promise((resolve) => setTimeout(resolve, 600))
+  })
+  const button = screen.getByTestId('add-employee-button')
+  fireEvent.click(button)
+  fireEvent.click(button)
+  fireEvent.click(button)
+  expect(screen.queryAllByTestId('employee-displayer').length).toBe(3)
 })
-*/
+
+it('should display 0 employees after clicking the button six times', async () => {
+  axiosMock.get.mockResolvedValueOnce({
+    data: { results: data }
+  })
+  await act(async () => {
+    render(<DynamicAllEmployeesDisplayer />)
+    await new Promise((resolve) => setTimeout(resolve, 200))
+  })
+  const button = screen.getByTestId('add-employee-button')
+  for (let i = 0; i < 6; i++) { fireEvent.click(button) }
+  expect(screen.queryAllByTestId('employee-displayer').length).toBe(0)
+})
